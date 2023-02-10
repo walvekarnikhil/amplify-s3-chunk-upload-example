@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Amplify, Storage} from 'aws-amplify';
 import aws_exports from './src/aws-exports';
@@ -9,6 +9,7 @@ Amplify.configure(aws_exports);
 const App = () => {
   const [filePath, setFilePath] = useState({});
   const [uri, setUri] = useState(null);
+  const [fileName, setFileName] = useState(null);
 
   const chooseFile = type => {
     let options = {
@@ -31,7 +32,8 @@ const App = () => {
         alert(response.errorMessage);
         return;
       }
-      setUri(response.assets[0].fileName);
+      setUri(response.assets[0].uri);
+      setFileName(response.assets[0].fileName);
       setFilePath(response);
     });
   };
@@ -49,6 +51,7 @@ const App = () => {
       });
     } catch (err) {
       console.log('error:', err);
+      alert(err);
     }
   }
 
@@ -59,9 +62,9 @@ const App = () => {
         onPress={() => chooseFile('video')}>
         <Text style={styles.textStyle}>Click here for video</Text>
       </TouchableOpacity>
-      {uri !== null && (
+      {uri !== null && fileName !== null && (
         <>
-          <Text style={styles.fileName}>{uri}</Text>
+          <Text style={styles.fileName}>{fileName}</Text>
           <TouchableOpacity
             style={styles.uploadButton}
             onPress={() => uploadVideo()}>
