@@ -38,12 +38,6 @@ const App = () => {
 
   async function uploadVideo() {
     try {
-      // Storage.configure({
-      //   region: aws_exports.aws_project_region,
-      //   bucket: aws_exports.aws_user_files_s3_bucket,
-      //   identityPoolId: aws_exports.aws_user_pools_id,
-      //   level: 'protected',
-      // });
       const photo = await fetch(uri);
       const photoBlob = await photo.blob();
       await Storage.put(uri, photoBlob, {
@@ -67,12 +61,6 @@ const App = () => {
       </TouchableOpacity>
       {uri !== null && (
         <>
-          {/* <Image
-            style={styles.image}
-            source={{
-              uri: uri,
-            }}
-          /> */}
           <Text style={styles.fileName}>{uri}</Text>
           <TouchableOpacity
             style={styles.uploadButton}
@@ -104,10 +92,6 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontSize: 15,
-  },
-  image: {
-    width: 300,
-    height: 300,
   },
   uploadButton: {
     alignItems: 'center',
