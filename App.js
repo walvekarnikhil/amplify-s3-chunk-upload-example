@@ -4,12 +4,11 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {Amplify, Storage} from 'aws-amplify';
 import aws_exports from './src/aws-exports';
 import {StorageChunkUpload} from 'amplify-s3-chunk-upload';
-import {Credentials} from '@aws-amplify/core';
 import RNFS from 'react-native-fs';
 import {Buffer} from 'buffer';
 
 Amplify.configure(aws_exports);
-const storagePlugin = new StorageChunkUpload({}, Credentials);
+const storagePlugin = new StorageChunkUpload({});
 Storage.addPluggable(storagePlugin);
 storagePlugin.configure(aws_exports);
 
